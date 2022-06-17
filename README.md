@@ -49,14 +49,14 @@ https://tekton.dev/docs/cli/
 
 ### Create Tekton Pipeline in cluster
 See: https://github.com/tektoncd/pipeline for recent version
-2. `kubectl apply -f releases/tekton-pipeline-v0.33.2.yaml`
+2. `kubectl apply -f releases/tekton-pipeline-v0.36.0.yaml`
     
     (Alternative)
-   `kubectl apply -f https://storage.googleapis.com/tekton-releases/pipeline/previous/v0.33.2/release.yaml`
+   `kubectl apply -f https://storage.googleapis.com/tekton-releases/pipeline/previous/v0.36.0/release.yaml`
 
 ### Create Tekton Dashboard in cluster
 See: https://github.com/tektoncd/dashboard for recent version
-3. `kubectl apply -f releases/tekton-dashboard-readonly-v0.24.1.yaml`
+3. `kubectl apply -f releases/tekton-dashboard-readonly-v0.27.0.yaml`
 
     Validate deployment of Tekton Dashboard & Pipeline
     `kubectl get pods --namespace tekton-pipelines`
@@ -68,10 +68,10 @@ See: https://github.com/tektoncd/dashboard for recent version
     `http://localhost:9097/`
 
 ## Create Tekton Task
-kubectl apply -f ./tasks/helloworld.yaml
+kubectl apply -f ./tasks/zcash-build.yml
 
-tkn task start --showlog helloworld
+tkn task start --showlog zcash-build
 
-tkn task delete helloworld
+tkn task delete zcash-build
 
 ## Create Tekton Pipeline
