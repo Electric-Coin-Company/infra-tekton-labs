@@ -49,7 +49,7 @@ https://tekton.dev/docs/cli/
 
 ### Create Tekton Pipeline in cluster
 See: https://github.com/tektoncd/pipeline for recent version
-2. `kubectl apply -f releases/tekton-pipeline-v0.36.0.yaml`
+2. `kubectl apply -f releases/tekton-pipeline-v0.37.0.yaml`
     
     (Alternative)
    `kubectl apply -f https://storage.googleapis.com/tekton-releases/pipeline/previous/v0.36.0/release.yaml`

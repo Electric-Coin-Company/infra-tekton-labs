@@ -2,7 +2,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: zcash-build
+  name: zcash-build-test
 spec:    
   params:
     - name: JOBS
@@ -17,20 +17,14 @@ spec:
     - name: BUILD_CONTAINER
       default: electriccoinco/zcashd-worker-ubuntu2004v2
       type: string
+    - name: TEST_TARGET
+      default: ""
+      type: string
   resources:
     inputs:
       - name: source
         type: git
   steps:
-    - name: setup-venv
-      image: $(params.BUILD_CONTAINER)
-      script: |
-        #!/bin/bash
-        set -e -o pipefail
-        python3 -m venv /venv/zcash-build-venv
-        source /venv/zcash-build-venv/bin/activate
-        python -m pip install pyblake2 pyflakes python-qpid-proton pyutil pyzmq requests simplejson
-        
     - name: build
       image: $(params.BUILD_CONTAINER)
       script: |
@@ -39,6 +33,7 @@ spec:
         cd workspace/source
         echo $(git rev-parse HEAD)
         echo $(git rev-parse --short HEAD)
+        
         if [ "$(params.BUILD_FOR_HOST)" == "x86_64-apple-darwin11" ]
         then
             mkdir -p depends/SDKs
@@ -49,3 +44,14 @@ spec:
         fi              
 
         CONFIGURE_FLAGS=$(params.CONFIGURE_FLAGS) HOST=$(params.BUILD_FOR_HOST) ./zcutil/build.sh -j$(params.JOBS)
+
+    - name: test
+      image: $(params.BUILD_CONTAINER)
+      script: |
+        #!/bin/bash
+        set -o pipefail
+        python -m pip install pyblake2 pyflakes python-qpid-proton pyutil pyzmq requests simplejson
+        cp -a /home/.zcash-params $HOME/
+        echo $(git rev-parse HEAD)
+        echo $(git rev-parse --short HEAD)
+        HOST=x86_64-pc-linux-gnu /workspace/source/qa/zcash/full_test_suite.py $(params.TEST_TARGET)
