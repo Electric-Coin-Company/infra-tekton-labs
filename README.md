@@ -52,7 +52,7 @@ See: https://github.com/tektoncd/pipeline for recent version
 2. `kubectl apply -f releases/tekton-pipeline-v0.37.0.yaml`
     
     (Alternative)
-   `kubectl apply -f https://storage.googleapis.com/tekton-releases/pipeline/previous/v0.36.0/release.yaml`
+   `kubectl apply -f https://storage.googleapis.com/tekton-releases/pipeline/previous/v0.37.0/release.yaml`
 
 ### Create Tekton Dashboard in cluster
 See: https://github.com/tektoncd/dashboard for recent version
